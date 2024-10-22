@@ -1,0 +1,554 @@
+body{
+  margin: 0;
+  padding: 0;
+}
+
+/*
+#map_div {
+  width: 85vw;
+  height: 90vh; 
+}
+*/
+.h4 {
+  color: #154daf !important;
+}
+.fa {
+  padding: 10px;
+  color:#0064bd;
+}
+.fa-caret-down {
+  padding: 0 !important;
+  color: white  !important;
+}
+.leaflet-right .leaflet-control {
+    margin-right: 10px;
+    
+    
+    display: none;
+}
+.leaflet-touch .leaflet-sidebar > .leaflet-control{
+  border: 2px solid #0095ff
+}
+.imgside {
+  border-style: double;
+}
+.menu {
+  margin-left: 10px;
+  margin-top: 5px
+}
+.left-menu{
+  padding-left:10%;
+  
+}
+
+.full, #map_div{
+  margin: 0;
+  padding:0;
+  height: 100vh;
+}
+
+.leaflet-sidebar > .leaflet-control {
+  padding: 0;
+}
+.dropdown-container {
+  display: none;
+} 
+
+.dropdown-container-guide {
+  display: none;
+} 
+.dropdown-container-sight {
+  display: none;
+} 
+.dropdown-container-insurance{
+  display: none;
+} 
+.fr-side {
+  background: white; 
+  text-align: left;
+  overflow-y: scroll;
+  height: 100%;
+  -webkit-overflow-scrolling: touch;
+  height: 100vh;
+  
+
+}
+
+.qr {
+  max-width: 80%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.w3-animate-top {
+  width: 600px;
+}
+
+.w3-teal, .w3-hover-teal:hover {
+  color: #fff!important;
+  background-color: #0095ff!important;
+  height: 40px;
+}
+.w3-teal h2 {
+  padding-top:2%;
+  font-weight: bold;
+}
+.w3-display-topright {
+  height: 40px;
+}
+/* CSS */
+.button-63 {
+align-items: center;
+background: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
+border: 0;
+border-radius: 8px;
+border-color: black;
+box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+box-sizing: border-box;
+color: #FFFFFF;
+display: flex;
+font-family: Phantomsans, sans-serif;
+font-size: 20px;
+justify-content: center;
+line-height: 1em;
+max-width: 100%;
+min-width: 140px;
+padding: 19px 24px;
+text-decoration: none;
+user-select: none;
+-webkit-user-select: none;
+touch-action: manipulation;
+white-space: nowrap;
+cursor: pointer;
+}
+
+.button-63:active,
+.button-63:hover {
+outline: 0;
+}
+
+@media (min-width: 768px) {
+.button-63 {
+  font-size: 24px;
+  min-width: 196px;
+}
+}
+
+
+/* CSS */
+.button-85 {
+padding: 0.6em 2em;
+border: none;
+outline: none;
+color: rgb(255, 255, 255);
+background: #111;
+cursor: pointer;
+position: relative;
+z-index: 0;
+border-radius: 10px;
+user-select: none;
+-webkit-user-select: none;
+touch-action: manipulation;
+}
+
+.button-85:before {
+content: "";
+background: linear-gradient(
+  45deg,
+  #ff0000,
+  #ff7300,
+  #fffb00,
+  #48ff00,
+  #00ffd5,
+  #002bff,
+  #7a00ff,
+  #ff00c8,
+  #ff0000
+);
+position: absolute;
+top: -2px;
+left: -2px;
+background-size: 400%;
+z-index: -1;
+filter: blur(5px);
+-webkit-filter: blur(5px);
+width: calc(100% + 4px);
+height: calc(100% + 4px);
+animation: glowing-button-85 20s linear infinite;
+transition: opacity 0.3s ease-in-out;
+border-radius: 10px;
+}
+
+@keyframes glowing-button-85 {
+0% {
+  background-position: 0 0;
+}
+50% {
+  background-position: 400% 0;
+}
+100% {
+  background-position: 0 0;
+}
+}
+
+.button-85:after {
+z-index: -1;
+content: "";
+position: absolute;
+width: 100%;
+height: 100%;
+background: #222;
+left: 0;
+top: 0;
+border-radius: 10px;
+}
+
+
+/* CSS */
+.button-64 {
+align-items: center;
+background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
+border: 0;
+border-radius: 8px;
+box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+box-sizing: border-box;
+color: #FFFFFF;
+display: flex;
+font-family: Phantomsans, sans-serif;
+font-size: 20px;
+justify-content: center;
+line-height: 1em;
+max-width: 100%;
+min-width: 140px;
+padding: 3px;
+text-decoration: none;
+user-select: none;
+-webkit-user-select: none;
+touch-action: manipulation;
+white-space: nowrap;
+cursor: pointer;
+}
+
+.button-64:active,
+.button-64:hover {
+outline: 0;
+}
+
+.button-64 span {
+background-color: rgb(5, 6, 45);
+padding: 16px 24px;
+border-radius: 6px;
+width: 100%;
+height: 100%;
+transition: 300ms;
+}
+
+.button-64:hover span {
+background: none;
+}
+
+@media (min-width: 768px) {
+.button-64 {
+  font-size: 24px;
+  min-width: 196px;
+}
+}
+
+.name-7 {
+  background-color: #0095ff;
+  border: 1px solid transparent;
+  border-radius: 0px;
+  box-shadow: rgba(255, 255, 255, .4) 0 1px 0 0 inset;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,"Segoe UI","Liberation Sans",sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.15385;
+  margin: 0;
+  height: 45px;
+  width: 100%;
+  font-weight: bold;
+  outline: none;
+  padding: 12px .8em;
+  padding-left: 0px !important;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+/* CSS */
+.button-7 {
+  background-color: #0095ff;
+  border: 1px solid transparent;
+  border-radius: 0px;
+  box-shadow: rgba(255, 255, 255, .4) 0 1px 0 0 inset;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,"Segoe UI","Liberation Sans",sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.15385;
+  margin: 0;
+  height: 45px;
+  width: 100%;
+  font-weight: bold;
+  outline: none;
+  padding: 8px .8em;
+  padding-left: 0px !important;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+.button-7:hover,
+.button-7:focus {
+  background-color: #07c;
+}
+
+.button-7:focus {
+  box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
+}
+
+.button-7:active {
+  background-color: #0064bd;
+  box-shadow: none;
+}
+
+/* CSS */
+.button-29 {
+  align-items: center;
+  appearance: none;
+  background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
+  border: 0;
+  border-radius: 6px;
+  box-shadow: rgba(45, 35, 66, .4) 0 2px 4px,rgba(45, 35, 66, .3) 0 7px 13px -3px,rgba(58, 65, 111, .5) 0 -3px 0 inset;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: "JetBrains Mono",monospace;
+  height: 48px;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding-left: 16px;
+  padding-right: 16px;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  transition: box-shadow .15s,transform .15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow,transform;
+  font-size: 18px;
+}
+
+.button-29:focus {
+  box-shadow: #3c4fe0 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+}
+
+.button-29:hover {
+  box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+  transform: translateY(-2px);
+}
+
+.button-29:active {
+  box-shadow: #3c4fe0 0 3px 7px inset;
+  transform: translateY(2px);
+}
+
+/* CSS */
+.button-19 {
+  appearance: button;
+  background-color: #1899D6;
+  border: solid transparent;
+  border-radius: 16px;
+  border-width: 0 0 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: din-round,sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .8px;
+  line-height: 20px;
+  margin: 0;
+  outline: none;
+  overflow: visible;
+  padding: 13px 16px;
+  text-align: center;
+  text-transform: uppercase;
+  touch-action: manipulation;
+  transform: translateZ(0);
+  transition: filter .2s;
+  user-select: none;
+  -webkit-user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.button-19:after {
+  background-clip: padding-box;
+  background-color: #1CB0F6;
+  border: solid transparent;
+  border-radius: 16px;
+  border-width: 0 0 4px;
+  bottom: -4px;
+  content: "";
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: -1;
+}
+
+.button-19:main,
+.button-19:focus {
+  user-select: auto;
+}
+
+.button-19:hover:not(:disabled) {
+  filter: brightness(1.1);
+  -webkit-filter: brightness(1.1);
+}
+
+.button-19:disabled {
+  cursor: auto;
+}
+
+
+.checkbox {
+  text-align: left;
+  font-size: 14px;
+  padding-left: 5%;
+  padding-top: 3%;
+  line-height: 2;
+  font-weight: 700;
+  color: #0d8eff;
+}
+
+.checkbox:hover {
+  color: #0d8eff;
+}
+
+input.largerCB {
+  width: 14px;
+  height: 14px;
+  padding-top: 2%;
+}
+.dropdown-btn, .dropdown-btn-insurance, .dropdown-btn-sight, .dropdown-btn-guide{
+  background-color: #0095ff;
+  border: 1px solid transparent;
+  border-radius: 0px;
+  box-shadow: rgba(255, 255, 255, .4) 0 1px 0 0 inset;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,"Segoe UI","Liberation Sans",sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.15385;
+  margin: 0;
+  height: 45px;
+  width: 100%;
+  font-weight: bold;
+  outline: none;
+  padding: 8px .8em;
+  padding-left: 0px !important;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+.dropdown-btn:hover,
+.dropdown-btn:focus {
+  background-color: #07c;
+}
+
+.dropdown-btn:focus {
+  box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
+}
+
+.dropdown-btn:active {
+  background-color: #0064bd;
+  box-shadow: none;
+}
+
+
+
+.dropdown-btn-insurance:hover,
+.dropdown-btn-insurance:focus {
+  background-color: #07c;
+}
+
+.dropdown-btn-insurance:focus {
+  box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
+}
+
+.dropdown-btn-insurance:active {
+  background-color: #0064bd;
+  box-shadow: none;
+}
+
+
+.dropdown-btn-sight:hover,
+.dropdown-btn-sight:focus {
+  background-color: #07c;
+}
+
+.dropdown-btn-sight:focus {
+  box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
+}
+
+.dropdown-btn-sight:active {
+  background-color: #0064bd;
+  box-shadow: none;
+}
+
+
+
+.dropdown-btn-guide:hover,
+.dropdown-btn-guide:focus {
+  background-color: #07c;
+}
+
+.dropdown-btn-guide:focus {
+  box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
+}
+
+.dropdown-btn-guide:active {
+  background-color: #0064bd;
+  box-shadow: none;
+}
+
+.table td, .table th {
+  font-weight: bold;
+  color: #0d8eff;
+  font-size: 13px;
+}

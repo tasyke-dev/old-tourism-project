@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="" />
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+
+  <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/lib/bootstrap/css/bootstrap.css">
+    <!--    plugins-->
+
+    <link rel="stylesheet" href="../static/lib/leaflet/plugins/L.Control.Sidebar.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma-rtl.min.css">
+    <!--    plugins-->
+
+    <link rel="stylesheet" href="../static/css/style.css">
+
+<style>
+  .tabs {
+    font-size: 0;
+    display: inherit;
+  }
+
+  .tabs>input[type="radio"] {
+    display: none;
+  }
+
+  .tabs>div {
+    /* скрыть контент по умолчанию */
+    display: none;
+    border: 1px solid #e0e0e0;
+    padding: 10px 15px;
+    font-size: 16px;
+  }
+
+  /* отобразить контент, связанный с вабранной радиокнопкой (input type="radio") */
+  #tab-btn-1:checked~#content-1,
+  #tab-btn-2:checked~#content-2,
+  #tab-btn-3:checked~#content-3 {
+    display: block;
+  }
+
+  .tabs>label {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    padding: 2px 8px;
+    font-size: 16px;
+    line-height: 1.5;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+    cursor: pointer;
+    position: relative;
+    top: 1px;
+  }
+
+  .tabs>label:not(:first-of-type) {
+    border-left: none;
+  }
+
+  .tabs>input[type="radio"]:checked+label {
+    background-color: #fff;
+    border-bottom: 1px solid #fff;
+  }
+</style>
+
+
+
+</head>
+<body>
+
+
+<div class="row full">
+<div class="col col-sm-3 full" style="overflow: auto;  ">
+  <div class="fr-side" id="left-bar">
+    <img class="fit-picture"
+    src="../static/css/imageIcon2.png">
+            <button id="create_route" class="button-7" > Построить маршрут </button>
+    <br>
+    <button onclick="getQr()" class="button-7"> QR code</button>
+  <button class="dropdown-btn">Тип туризма 
+    <i class="fa fa-caret-down"></i>
+  </button>
+  
+  <div class="dropdown-container">
+    <label class="checkbox">
+      <input type="checkbox" class="largerCB" id = "Rec" checked>
+      Рекреационный 
+    </label><br>
+    <label class="checkbox">
+      <input type="checkbox" class="largerCB" id = "Pal" checked>
+      Паломнический 
+    </label><br>
+    <label class="checkbox">
+      <input type="checkbox" class="largerCB" id = "Eco" checked>
+      Экологический 
+    </label><br>
+    <label class="checkbox">
+      <input type="checkbox"  class="largerCB" id = "Heal" checked>
+      Лечебно-оздоровительный 
+    </label><br>
+    <label class="checkbox">
+      <input type="checkbox"  class="largerCB" id = "Sci" checked>
+      Научный 
+    </label><br>
+    <label class="checkbox">
+      <input type="checkbox" class="largerCB" id = "Enter" checked>
+      Культурно-развлекательный 
+    </label><br>
+      <button id="remove_markr"  class="button-7" > Применить фильтр </button>
+      <hr style="margin: 0.5rem 0;">
+  </div>
+
+
+
+<button class="dropdown-btn-sight">Достопримечательности
+  <i class="fa fa-caret-down"></i>
+</button>
+
+<div class="dropdown-container-sight">
+    <div id="content-1">
+      <table class="table table-bordered">
+        <tbody id="t_points"></tbody>
+      </table>
+    </div>
+</div>
+
+<button class="dropdown-btn-guide">Гиды
+  <i class="fa fa-caret-down"></i>
+</button>
+
+<div class="dropdown-container-guide">
+  <div id="content-2">
+    <table class="table table-bordered">
+      <tbody id="t_guides"></tbody>
+    </table>
+  </div>
+</div>
+
+
+
+<button class="dropdown-btn-insurance">Страховка
+  <i class="fa fa-caret-down"></i>
+</button>
+
+<div class="dropdown-container-insurance">
+    <div id="content-3">
+      <table class="table table-bordered">
+        <tbody id="t_insurance"></tbody>
+      </table>
+    </div>
+</div>
+
+
+</div>
+
+
+</div>
+
+<div class="col col-sm-9 full">
+    <div class="row">
+        <div id="side-bar" class="col-md-12">
+          <h4 ><span class="name-7" id="name"></span></h4>
+          <h4><img id="img" class="imgside" src=""></h4>
+            <button id="addToRoute" class="button-7"> Добавить в маршрут </button>
+            
+            <h4 style="display: none;" >x: <span id="x-coord" ></span></h4>
+            <h4 style="display: none;" >y: <span id="y-coord"></span></h4>
+            <h4><i class="fa fa-question-circle" aria-hidden="true" style="font-size: 2.5em;"></i>Тип: <span id="type"></span></h4>
+            <h4><i class="fa fa-bars" aria-hidden="true" style="font-size: 2.5em;"></i>Категория: <span id="category"></span></h4>
+              
+            
+            
+            <h4><i class="fa fa-clock-o" aria-hidden="true" style="font-size: 2.5em;"></i>Время работы: <span id="schedule"></span></h4>
+            <h4><i class="fa fa-calculator" aria-hidden="true" style="font-size: 2.5em;"></i>Необходимое время: <span id="tts"></span></h4>
+            <h4><i class="fa fa-money" aria-hidden="true" style="font-size: 2.5em;"></i>Стоимость посещения: <span id="price"></span></h4>
+            <h4><i class="fa fa-star" aria-hidden="true" style="font-size: 2.5em;"></i>Рейтинг: <span id="rating"></span></h4>
+            
+            
+            <h4><i class="fa fa-commenting" aria-hidden="true" style="font-size: 2.5em;">
+            </i>Описание: <br> 
+              <span id="desc" style="position: relative; font-size: 1.2em; padding-left: 5%; font-family: DejaVu Sans Mono, monospace;" class="display-5"></span>
+            </h4>
+
+
+        </div>
+
+        
+
+
+
+        <div id="id01" class="w3-modal">
+          <div class="w3-modal-content w3-animate-top w3-card-4">
+            <header class="w3-container w3-teal"> 
+              <span onclick="document.getElementById('id01').style.display='none'" 
+              class="w3-button w3-display-topright">&times;</span>
+              <h2>Ваш маршрут</h2>
+            </header>
+            <div class="w3-container">
+              
+              <i class="fa fa-eye" aria-hidden="true" style="font-size: 2.5em;"></i><p id="qrtext" style="color: black; white-space: pre-line;">Some text..</p>
+              <img  id="qrimg" class="qr" src="../static/images/qrcode.png">
+            </div>
+          </div>
+        </div>
+        <div id="map_div"> </div>
+    </div>
+</div>
+<style>
+
+
+#map_div {
+width: 100vw;
+height: 100vh; 
+z-index:1;
+}
+#id01 {
+  z-index:2;
+}
+.leaflet-right .leaflet-control {
+    margin-right: 10px;
+    display: none;
+}
+</style>
+
+
+</body>
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+<script src="../static/lib/leaflet/jquery-3.5.1.js"></script>
+<script src="../static/js/qrcode.min.js"></script>
+<script>
+  //переменная для хранения выбранных точек
+  var points_list=[]
+  //загружаем в переменную гиды из БД
+  var guides = {{guides|safe}};
+  //загружаем в переменную страховки из БД
+  var insurance = {{insur|safe}}
+  //загружаем в переменную иконки для карты
+  var icons = {{icons|safe}}
+  var pp_list = []
+  //переменная для хранения точек маршрута
+  var route_list = [] 
+  //переменная для хранения выбранного гида
+  var choosenGuide = null;
+  //переменная для хранения маршрута на карте
+  var routingControl = null;
+  //переменная для хранения выбранной страховки
+  var choosenInsur= null;
+  var i;
+  var dropdown = document.getElementsByClassName("dropdown-btn");
+
+  for (i = 0; i < dropdown.length; i++) {
+    dropdown[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var dropdownContent = this.nextElementSibling;
+      if (dropdownContent.style.display === "block") {
+        dropdownContent.style.display = "none";
+      } else {
+        dropdownContent.style.display = "block";
+      }
+    });
+  }
+  
+
+
+  var dropdown_sight = document.getElementsByClassName("dropdown-btn-sight");
+  var ks;
+  for (ks = 0; ks < dropdown_sight.length; ks++) {
+    dropdown_sight[ks].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var dropdownContent_sight = this.nextElementSibling;
+      if (dropdownContent_sight.style.display === "block") {
+        dropdownContent_sight.style.display = "none";
+      } else {
+        dropdownContent_sight.style.display = "block";
+      }
+    });
+  }
+
+
+  var dropdown_guide  = document.getElementsByClassName("dropdown-btn-guide");
+  var m;
+  for (m = 0; m < dropdown_guide.length; m++) {
+    dropdown_guide[m].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var dropdownContent_guide = this.nextElementSibling;
+      if (dropdownContent_guide.style.display === "block") {
+        dropdownContent_guide.style.display = "none";
+      } else {
+        dropdownContent_guide.style.display = "block";
+      }
+    });
+  } 
+
+
+  var dropdown_insurance  = document.getElementsByClassName("dropdown-btn-insurance");
+  var n;
+  for (n = 0; n < dropdown_insurance.length; n++) {
+    dropdown_insurance[n].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var dropdownContent_insurance = this.nextElementSibling;
+      if (dropdownContent_insurance.style.display === "block") {
+        dropdownContent_insurance.style.display = "none";
+      } else {
+        dropdownContent_insurance.style.display = "block";
+      }
+    });
+  }
+
+
+
+
+//добавление гидов в таблицу
+  for (i = 0; i < guides.length; i++){
+    addRowTableG(guides[i])
+  }
+  //добавление страховок в таблицу
+  for (i = 0; i < insurance.length; i++){
+    addRowTableI(insurance[i])
+  }
+  
+//функция get-запроса, которая срабатыает от нажатия кнопки вывода модального окна
+function getQr()
+{
+  //если в маршруте больше одной точки, то мы запрашиваем данные
+  if (route_list.length > 1) {
+  document.getElementById('id01').style.display='block'
+  //получение данных
+  fetch('/test')
+      .then(function (response) {
+          return response.json(); // получение данных в виде JSON
+      }).then(function (text) {
+        //устанавиваем источник изображения qr-кода
+        document.getElementById('qrimg').src=text.qrcode
+        //добавляем текст-описание маршрута
+        document.getElementById('qrtext').innerHTML=text.text
+      });
+  }
+}
+
+  //функция добавленмя гидов в таблицу
+  function addRowTableG(code){
+    //создание строки таблицы
+    var tr = document.createElement("tr");
+    //добавление свойства изменения цвета при наведении на строку
+    tr.classList.add('hoverrow')
+    //создание ячеек строке с указанием имени, стоимости и категории туризма
+    var td = document.createElement("td");
+    var tdP = document.createElement("td");
+    var tdt = document.createElement("td");
+    //добавление имени в ячейку для имени
+    td.textContent = decodeURIComponent(code.name);
+    //добавление имени в ячейку для категории
+    tdt.textContent = code.typee;
+    //добавление имени в ячейку для стоимости услуг
+    tdP.textContent = code.price;
+    //добавление ячеек в таблицу
+    tr.appendChild(td);
+    tr.appendChild(tdP)
+    tr.appendChild(tdt)
+    //установка события клика на строку, по которому в переменную choosenGuide записывается выбранный гид
+    tr.onclick = function(){choosenGuide=code;};
+    //размещение строки в таблице гидов
+    document.getElementById("t_guides").appendChild(tr);
+  }
+
+  //функция добавленмя страховок в таблицу
+  function addRowTableI(code){
+    if (code.price != 0) {
+      //создание строки таблицы
+      var tr = document.createElement("tr");
+      //добавление свойства изменения цвета при наведении на строку
+      tr.classList.add('hoverrow')
+      //создание ячеек в строке с указанием названия организации и стоимости 
+      var td = document.createElement("td");
+      var tdP = document.createElement("td");
+      //добавление названия в ячейку для названия
+      td.textContent = decodeURIComponent(code.name);
+      //добавление стоимости в ячейку для стоимости
+      tdP.textContent = code.price+"%";
+      //добавление ячеек в таблицу
+      tr.appendChild(td);
+      tr.appendChild(tdP)
+      //установка события клика на строку, по которому в переменную choosenInsur записывается выбранная страховка
+      tr.onclick = function(){choosenInsur=code;};
+      //размещение строки в таблице страховок
+      document.getElementById("t_insurance").appendChild(tr);
+    }
+    
+  }
+  
+
+  $(document).ready(function () {
+  const map = L.map('map_div', {
+      center: [53.2007, 45.0046],
+      zoom: 10
+    });
+  map.setView([53.2007, 45.0046], 8);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+  
+
+
+  var sidebar = L.control.sidebar('side-bar', {
+      closeButton: true,
+      position: 'right'
+  });
+
+
+
+  map.addControl(sidebar);
+  //setTimeout(function () {
+  //    sidebar.show();
+  //}, 500);
+
+  map.on('click', function () {
+      sidebar.hide();
+      document.getElementById('id01').style.display='none'
+  })
+  
+//добавление обработки события клика на кнопку "построить маршрут"
+document.getElementById('create_route').addEventListener('click',create_route)
+  //функция построения маршрута
+  function create_route(){
+    //проверка на наличие построенного маршрута (нужно, если кнопка нажиматся повторно, для удаления маршрута)
+    if (routingControl===null)
+    {
+      //локальная переменная для хранения вейпоинтов (для построения по ним маршрута)
+      var waypoint = []
+      //обходим массив выбранных точек
+      for (var i=0; i<route_list.length; i++)
+      {
+        //добавляем их в список для построения вейпоинтов
+        waypoint.push(L.latLng((route_list[i][1]),(route_list[i][2])))
+      }
+      //устанавливаем параметры для вейпоинтов на карте (указыаем точки, запрещаем их перемещать, создаем маркеры на карте)
+      routingControl = L.Routing.control({
+        waypoints: waypoint,
+        draggableWaypoints: false,
+        createMarker: function() { return null; },
+    }).addTo(map); //добавляем маршрут на карту
+    }
+    //если маршрут уже был проложен, то удаляем его
+    else{
+      removeRoutingControl()
+    }
+    //создаем локальные переменные для хранения выбранных точек, гида и страховки, с последующей отправкой
+    var s = route_list
+    var ins= choosenInsur
+    var gui = choosenGuide
+    //отправка post-запроса с помощью JQuery и AJAX, где указывается тип запроса, url по которому он происходит, тип данных и словарь ранееупомянутых данных в переменной data
+    $.ajax({
+      url:"/postmethod",
+      type:"POST",
+      contentType: "application/json",
+      dataType: 'json',
+      data: JSON.stringify({
+        'points':s,
+        'insurance':ins,
+        'guides': gui
+      }),
+      success: function(){console.log('cool')}
+    });
+  }
+//функция удаления маршрута
+var removeRoutingControl = function () {
+        //если маршрут существует
+        if (routingControl != null) {
+          //удаление маршрута с карты
+          map.removeControl(routingControl);
+          //установка переменной маршрута пустой
+          routingControl = null;
+        }
+    };
+
+//фунция добавления объектов в таблицу
+function addRowTable(code, coords){
+  //создание строки таблицу
+  var tr = document.createElement("tr");
+  //создание ячейки строки для названия
+  var td = document.createElement("td");
+  //помещение названия объекта в ячейку для названия
+  td.textContent = decodeURIComponent(code.name);
+  //добалвение ячейки в строку
+  tr.appendChild(td);
+  //установка обработки события по клику для переноса камеры к выбранной точке
+  tr.onclick = function(){map.flyTo(coords, 17);};
+  //добавление строки в таблицу объектов
+  document.getElementById("t_points").appendChild(tr);
+}
+
+
+
+//функция добавления маркеров на карту
+function addMarker(sightseeing)
+{
+  //создание переменной для хранения иконки маркера
+  var ficon = null;
+  //проверка категории объекта с выбором соответствующей иконки (напирмер, маркер с ночлегом, обращаемся в словарь с путями картинок и выбираем нужный, остальные категории по аналогии)
+  if(decodeURIComponent(sightseeing['category'])=='Еда'){
+    ficon = L.icon({iconUrl: decodeURIComponent(icons.food),iconSize:  [50, 50],})
+  }
+  else if(decodeURIComponent(sightseeing['category'])=='Развлечения'){
+    ficon = L.icon({iconUrl: decodeURIComponent(icons.sight),iconSize:  [50, 50],})
+  }
+  else if(decodeURIComponent(sightseeing['category'])=='Ночлег'){
+    ficon = L.icon({iconUrl: decodeURIComponent(icons.sleep),iconSize:  [50, 50],})
+  }
+  else if(decodeURIComponent(sightseeing['category'])=='Покупки'){
+    ficon = L.icon({iconUrl: decodeURIComponent(icons.shopping),iconSize:  [50, 50],})
+  } else if(decodeURIComponent(sightseeing['category'])=='Банки') {
+    ficon = L.icon({iconUrl: decodeURIComponent(icons.bank),iconSize:  [50, 50],})
+  }
+  else if(decodeURIComponent(sightseeing['category'])=='Красота') {
+    ficon = L.icon({iconUrl: decodeURIComponent(icons.beauty),iconSize:  [50, 50],})
+  }
+  // создние маркер с заданными координатами и иконкой с запретом на перемещение
+  var p = L.marker([sightseeing['x'],sightseeing['y']],{draggable:false, icon:ficon});
+  // установка названия точки во всплыающее окно по нажатию
+  p.title = decodeURIComponent(sightseeing['name']);
+  p.alt = decodeURIComponent(sightseeing['name']);
+  p.bindPopup(decodeURIComponent(sightseeing['name']));
+  //добавление маркера на карту
+  p.addTo(map); 
+  //функция открытия бокового окна по клику на маркер объекта
+  p.on('click', function () {
+    var btCounter = 0 
+    for (let elem in route_list) {
+          if (route_list[elem][0] == sightseeing['name']){
+             btCounter = btCounter + 1
+          }
+      }
+      if (btCounter < 1) {
+            document.getElementById('addToRoute').innerText = 'Добавить в маршрут'
+      }
+      else {
+        document.getElementById('addToRoute').innerText = 'Убрать из маршрута'
+      }
+    // скрыаем сайдбар, если был нажат (нужно, чтобы каждый раз не заркывать сайдбар и быстро переключаеться между точками)
+    sidebar.hide();
+    //перемещаемся к маркеру
+    map.flyTo([sightseeing['x'],sightseeing['y']], 9);
+    //открываем сайдбар
+    sidebar.toggle();
+    //задание размеров изображения
+    let imgSrc = new Image(100,100);
+    //указание пути до изображения выбранной точки
+    imgSrc.src = '../static/images/'+decodeURIComponent(sightseeing['img']);
+    //добалвение названия, описания, координат, изображения, рейтинга, категории, стоимости посещения, необходимого на посещение времени, расписания, типа объекта соответственно
+    document.getElementById('name').textContent=decodeURIComponent(sightseeing['name']);
+    document.getElementById('desc').textContent=decodeURIComponent(sightseeing['desc']);
+    document.getElementById('x-coord').textContent=decodeURIComponent(sightseeing['x']);
+    document.getElementById('y-coord').textContent=decodeURIComponent(sightseeing['y']);
+    document.getElementById('img').src = imgSrc.src
+    document.getElementById('rating').textContent=sightseeing['rating'];
+    document.getElementById('category').textContent=sightseeing['category']
+    document.getElementById('price').textContent=sightseeing['price'];
+    document.getElementById('tts').textContent=decodeURIComponent(sightseeing['tts']);
+    document.getElementById('schedule').textContent=decodeURIComponent(sightseeing['schedule']);
+    document.getElementById('type').textContent=decodeURIComponent(sightseeing['typee']);
+    }) 
+    $(document).ready(function() {
+      $("#remove_markr").click(function(){
+          map.removeLayer(p)
+          route_list = []
+          removeRoutingControl()
+      }); 
+  
+    });
+    //вызов функции для добавления объектов в таблицу в меню справа
+  addRowTable(sightseeing, [sightseeing['x'],sightseeing['y']]);
+}
+
+
+$(document).ready(function() {
+    $("#addToRoute").click(function(){
+      var seesight_name = document.getElementById("name").innerText;
+      var x_coordinate = document.getElementById("x-coord").innerText;
+      var y_coordinate = document.getElementById("y-coord").innerText;
+      var counter = 0
+      if (route_list.length < 1) {
+         route_list.push([seesight_name, x_coordinate, y_coordinate])
+         document.getElementById('addToRoute').innerText = 'Убрать из маршрута'
+      }
+      else {
+        for (let key in route_list) {
+          if (route_list[key][0] == seesight_name && route_list[key][1] == x_coordinate && route_list[key][2] == y_coordinate){
+             counter = counter + 1
+             route_list.splice(key,1)
+             document.getElementById('addToRoute').innerText = 'Добавить в маршрут'
+             if(routingControl!=null){
+             removeRoutingControl()
+             create_route()
+             }
+          }
+        }
+        if (counter < 1) {
+           route_list.push([seesight_name, x_coordinate, y_coordinate])
+           document.getElementById('addToRoute').innerText = 'Убрать из маршрута'
+           if(routingControl!=null){
+              removeRoutingControl()
+             create_route()
+           }
+        }
+      }
+    });
+  });
+
+
+  $(document).ready(function() {
+    $("#remove_markr").click(function(){
+      console.log(pp_list)
+      document.getElementById('t_points').innerHTML = '';
+      var rec = document.getElementById('Rec');
+      var pal = document.getElementById('Pal');
+      var eco = document.getElementById('Eco');
+      var heal = document.getElementById('Heal');
+      var sci = document.getElementById('Sci');
+      var enterr = document.getElementById('Enter');
+      for (var i=0; i < pp_list.length; i++){
+        console.log( pp_list[i]['typee'] )
+        if (rec.checked) {
+          if (pp_list[i]['typee']=='Рекреационный') {
+            addMarker(pp_list[i]);
+          }     
+        }
+        if (pal.checked) {
+          if (pp_list[i]['typee']=='Паломнический') {
+            addMarker(pp_list[i]);
+          }     
+        }
+        if (eco.checked) {
+          if (pp_list[i]['typee']=='Экологический') {
+            addMarker(pp_list[i]);
+          }     
+        }
+        if (heal.checked) {
+          if (pp_list[i]['typee']=='Лечебно-оздоровительный') {
+            addMarker(pp_list[i]);
+          }     
+        }
+        if (sci.checked) {
+          if (pp_list[i]['typee']=='Научный') {
+            addMarker(pp_list[i]);
+          }     
+        }
+        if (enterr.checked) {
+          if (pp_list[i]['typee']=='Культурно-развлекательный') {
+            addMarker(pp_list[i]);
+          }     
+        }
+        console.log(pp_list[i]);
+
+      }
+    }); 
+  });
+
+//фунция перебора всех полученных точек с последующим добавлением на карту
+$(document).ready(function (){
+  //переменная для хранения полученных от сервера объектов
+  var points = {{sights|safe}};
+  pp_list = points
+  //перебор элементов списка
+  for (var i=0; i < points.length; i++){
+    //вызов функции добавления маркера на карту
+    addMarker(points[i]);
+  }
+});
+});
+</script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<!--    plugins-->
+<script src="../static/lib/leaflet/plugins/L.Control.Sidebar.js"></script>
+<!--    plugins-->
+<script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+
+
+
+
+
+</html>
